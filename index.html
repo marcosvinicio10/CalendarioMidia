@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendário Mídia CESF</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-icon">📅</div>
+          <h1>Calendário Mídia CESF</h1>
+        </div>
+        <nav class="month-nav">
+          <button id="prevMonth" class="nav-btn" aria-label="Mês anterior">‹</button>
+          <div id="monthLabel" class="month-label">Mês Ano</div>
+          <button id="nextMonth" class="nav-btn" aria-label="Próximo mês">›</button>
+        </nav>
+      </header>
+
+      <main class="content">
+        <section class="calendar-card">
+          <div class="weekdays" aria-hidden="true">
+            <div>Dom</div>
+            <div>Seg</div>
+            <div>Ter</div>
+            <div>Qua</div>
+            <div>Qui</div>
+            <div>Sex</div>
+            <div>Sáb</div>
+          </div>
+          <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Calendário do mês"></div>
+        </section>
+
+        <section class="upcoming-card">
+          <div class="section-title">
+            <h2>Próximas atividades</h2>
+          </div>
+          <ul id="upcomingList" class="upcoming-list" aria-live="polite"></ul>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <span>Feito com ❤ e Firebase</span>
+      </footer>
+    </div>
+
+    <!-- Modal de eventos do dia -->
+    <div id="eventModal" class="modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header">
+          <h3 id="modalTitle">Eventos do dia</h3>
+          <button class="close-btn" data-close aria-label="Fechar">✕</button>
+        </div>
+        <div class="modal-date" id="eventDateLabel">--/--/----</div>
+        <div class="modal-body">
+          <div class="day-events">
+            <h4>Já adicionados</h4>
+            <ul id="dayEventsList" class="day-events-list"></ul>
+          </div>
+          <div class="add-event">
+            <h4>Adicionar tarefa</h4>
+            <form id="eventForm">
+              <label class="field">
+                <span>Título</span>
+                <input id="eventTitle" type="text" placeholder="Ex: Reunião de planejamento" required maxlength="80" />
+              </label>
+              <label class="field">
+                <span>Descrição</span>
+                <textarea id="eventDesc" rows="3" placeholder="Detalhes importantes..." maxlength="500"></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="primary-btn">Salvar</button>
+                <button type="button" class="ghost-btn" data-close>Fechar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de detalhes da atividade -->
+    <div id="eventDetailsModal" class="modal" aria-hidden="true">
+      <div class="modal-backdrop" data-details-close></div>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+        <div class="modal-header">
+          <h3 id="detailsTitle">Detalhes da atividade</h3>
+          <button class="close-btn" data-details-close aria-label="Fechar">✕</button>
+        </div>
+        <div class="modal-date" id="detailsDate">--/--/----</div>
+        <div class="modal-body">
+          <div id="detailsView">
+            <div class="details-grid">
+              <div>
+                <div class="event-title" id="detailsViewTitle">Título</div>
+                <div class="event-desc" id="detailsViewDesc">Descrição</div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="detailsEditBtn" class="primary-btn" type="button">Editar</button>
+              <button id="detailsDeleteBtn" class="delete-btn" type="button">Excluir</button>
+              <button class="ghost-btn" data-details-close type="button">Fechar</button>
+            </div>
+          </div>
+
+          <form id="detailsEditForm" style="display:none">
+            <label class="field">
+              <span>Título</span>
+              <input id="detailsEditTitle" type="text" maxlength="80" required />
+            </label>
+            <label class="field">
+              <span>Descrição</span>
+              <textarea id="detailsEditDesc" rows="4" maxlength="500"></textarea>
+            </label>
+            <div class="form-actions">
+              <button id="detailsSaveBtn" class="primary-btn" type="submit">Salvar</button>
+              <button id="detailsCancelEditBtn" class="ghost-btn" type="button">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase SDKs (compat para simplicidade com script tag) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <!-- Config do Firebase: preencha seu projeto em firebase-config.js -->
+    <script src="firebase-config.js"></script>
+    <!-- Inicialização do Firebase -->
+    <script src="firebase.js"></script>
+    <!-- App -->
+    <script src="app.js"></script>
+  </body>
+  </html>
+
